@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class PlayerCircle extends Actor {
 	private Stage stage;
+	
 	private Texture playerCircleTexture;
 	private float radius = 32f;
 	
