@@ -33,7 +33,6 @@ public class SplashScreen implements Screen, InputProcessor {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(delta);
 		stage.draw();
 	}
 
@@ -44,6 +43,7 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(this);
 		batch = new SpriteBatch();
 		stage = new Stage(new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT), batch);
 		text = new SplashScreenText(stage);
@@ -54,29 +54,26 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
 	public void dispose() {
+		Gdx.input.setInputProcessor(null);
 		batch.dispose();
 		stage.dispose();
 		text.dispose();
 	}
-	
-	/**
-	 * InputProcessor methods
-	 */
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -97,7 +94,9 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (pointer == 0) {
+			playerCircle.setPosition(screenX, screenY);
+		}
 		return false;
 	}
 
@@ -109,7 +108,9 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
+		if (pointer == 0) {
+			playerCircle.setPosition(screenX, screenY);
+		}
 		return false;
 	}
 
@@ -124,5 +125,4 @@ public class SplashScreen implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

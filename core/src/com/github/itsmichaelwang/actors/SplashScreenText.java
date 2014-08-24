@@ -29,12 +29,12 @@ public class SplashScreenText extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		CharSequence str = "Press/Hold finger below!";
 		float fontWidth = font.getBounds(str).width;
-		float fontHeight = font.getBounds(str).height * 4;
+		float fontHeight = font.getBounds(str).height;
 		
 		font.setColor(1, 1, 1, 1);
 		font.drawWrapped(batch, str,
 				(stage.getCamera().viewportWidth - fontWidth) / 2,
-				(stage.getCamera().viewportHeight + fontHeight) / 2,
+				(stage.getCamera().viewportHeight - fontHeight) / 2 + 128,
 				stage.getCamera().viewportWidth, HAlignment.CENTER);
 	}
 	
