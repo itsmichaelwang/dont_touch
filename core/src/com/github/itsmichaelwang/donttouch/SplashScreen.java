@@ -23,7 +23,6 @@ public class SplashScreen implements Screen, InputProcessor {
 	private SplashScreenText text;
 	private PlayerCircle playerCircle;
 	
-	
 	// Passing in the game to control screens
 	public SplashScreen(Game g) {
 		this.gameLauncher = g;
@@ -94,6 +93,7 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		text.startGame();
 		if (pointer == 0) {
 			playerCircle.setPosition(screenX, screenY);
 		}
@@ -102,14 +102,13 @@ public class SplashScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		if (pointer == 0) {
-			playerCircle.setPosition(screenX, screenY);
+			playerCircle.updatePosition(screenX, screenY);
 		}
 		return false;
 	}

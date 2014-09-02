@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class SplashScreenText extends Actor {
 	Stage stage;
@@ -16,6 +17,10 @@ public class SplashScreenText extends Actor {
 	BitmapFont font;
 	
 	private final float FONT_SIZE = 12f;
+	
+	boolean gStarted = false;
+	public void startGame() { gStarted = true; }
+	long gStartedTime;
 	
 	public SplashScreenText(Stage stage) {
 		this.stage = stage;
@@ -27,15 +32,34 @@ public class SplashScreenText extends Actor {
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		CharSequence str = "Press/Hold finger below!";
-		float fontWidth = font.getBounds(str).width;
-		float fontHeight = font.getBounds(str).height;
+		CharSequence str;
 		
-		font.setColor(1, 1, 1, 1);
-		font.drawWrapped(batch, str,
-				(stage.getCamera().viewportWidth - fontWidth) / 2,
-				(stage.getCamera().viewportHeight - fontHeight) / 2 + 128,
-				stage.getCamera().viewportWidth, HAlignment.CENTER);
+		// Series of conditions that determine game text
+		if (!gStarted) {
+			gStartedTime = TimeUtils.millis();
+			str = "Press/Hold to begin!";
+		} else {
+			if (TimeUtils.timeSinceMillis(gStartedTime) <= 1000) {
+				str = "3";
+			} else if (TimeUtils.timeSinceMillis(gStartedTime) <= 2000) {
+				str = "2";
+			} else if (TimeUtils.timeSinceMillis(gStartedTime) <= 3000) {
+				str = "1";
+			} else {
+				str = "";	// null for empty string
+			}
+		}
+		
+		// Draw it unless it is an empty string
+		if (!str.toString().isEmpty()) {
+			float fontWidth = font.getBounds(str).width;
+			float fontHeight = font.getBounds(str).height;
+			
+			font.setColor(1, 1, 1, 1);
+			font.drawMultiLine(batch, str, 
+					0, (stage.getHeight() - fontHeight) / 2 + 150, stage.getWidth(),
+					HAlignment.CENTER);
+		}
 	}
 	
 	public void dispose() {
