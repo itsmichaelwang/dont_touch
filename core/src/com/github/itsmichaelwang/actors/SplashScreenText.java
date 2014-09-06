@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -25,6 +27,7 @@ public class SplashScreenText extends Actor {
 		this.sScreen = sScreen;
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("data/press-start_regular.ttf"));
 		parameter = new FreeTypeFontParameter();
+		parameter.flip = true;
 		parameter.size = Math.round(FONT_SIZE * Gdx.graphics.getDensity());
 		font = generator.generateFont(parameter);
 	}
@@ -32,11 +35,10 @@ public class SplashScreenText extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		CharSequence str;
-		font.setColor(1, 1, 1, 1);
 		
 		// Series of conditions that determine game text
 		if (!sScreen.gStarted) {
-			str = "Press/Hold to begin!";
+			str = "Press here!";
 		} else {
 			if (TimeUtils.timeSinceMillis(sScreen.gStartedTime) <= 1000) {
 				str = "3";
@@ -51,10 +53,15 @@ public class SplashScreenText extends Actor {
 		
 		// Draw it unless it is an empty string
 		if (!str.toString().isEmpty()) {
+			Matrix4 mx4Font = new Matrix4();
+			mx4Font.setToRotation(new Vector3(200, 200, 0), 180);
+			batch.setTransformMatrix(mx4Font);
+			font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 			float fontHeight = font.getBounds(str).height;
 			font.drawMultiLine(batch, str, 
-					0, (stage.getHeight() - fontHeight) / 2 + 150, stage.getWidth(),
+					0, (stage.getHeight() - fontHeight) / 2 + 150, stage.getHeight(),
 					HAlignment.CENTER);
+			batch.setTransformMatrix(mx4Font);
 		}
 	}
 	
