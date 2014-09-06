@@ -3,6 +3,7 @@ package com.github.itsmichaelwang.donttouch;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.github.itsmichaelwang.actors.MissileGenerator;
@@ -38,6 +39,12 @@ public class GameWorld {
 	public void update(float delta) {
 		// perform game logic here
 		mg.generateMissiles(delta);
+		// off screen object removal
+		for (Actor actor : stage.getActors()) {
+			if (actor.getX() > stage.getWidth()) {
+				actor.remove();
+			}
+		}
 		
 		box2dWorld.step(delta, 3, 3); // update box2D world
 		stage.act(delta);	// update game stage

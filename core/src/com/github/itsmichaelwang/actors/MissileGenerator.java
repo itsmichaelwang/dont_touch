@@ -1,7 +1,5 @@
 package com.github.itsmichaelwang.actors;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.github.itsmichaelwang.donttouch.GameWorld;
@@ -24,7 +22,7 @@ public class MissileGenerator {
 	public void generateMissiles(float delta) {
 		if (sScreen.gStarted) {
 			if (TimeUtils.timeSinceMillis(sScreen.gStartedTime) >= 4000) {
-				nextMissileTimer -= delta;
+				nextMissileTimer -= delta * 1000;
 				if (nextMissileTimer <= 0) {
 					nextMissileTimer += MISSILE_INTERVAL;
 					
@@ -32,7 +30,6 @@ public class MissileGenerator {
 					Missile missile = new Missile(world);
 					stage.addActor(missile);
 				}
-				
 			}
 		} else {
 			nextMissileTimer = 0;
