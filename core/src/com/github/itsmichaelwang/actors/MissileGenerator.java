@@ -4,19 +4,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.github.itsmichaelwang.donttouch.GameWorld;
 import com.github.itsmichaelwang.donttouch.SplashScreen;
 
 public class MissileGenerator {
 	private Stage stage;
-	private World world;
+	private GameWorld world;
 	private SplashScreen sScreen;
 	
 	private float nextMissileTimer = 0;
-	private final float MISSILE_INTERVAL = 500;	// Spawn a missile every 0.5s
+	private final float MISSILE_INTERVAL = 500;	// Spawn a missile every specified ms
 	
-	public MissileGenerator(Stage stage, World world, SplashScreen sScreen) {
-		this.stage = stage;
+	public MissileGenerator(GameWorld world, SplashScreen sScreen) {
 		this.world = world;
+		this.stage = world.stage;
 		this.sScreen = sScreen;
 	}
 	
@@ -27,9 +28,9 @@ public class MissileGenerator {
 				if (nextMissileTimer <= 0) {
 					nextMissileTimer += MISSILE_INTERVAL;
 					
-					// Create a missile as a Box2D object
-					float spawnLocation = MathUtils.random(stage.getHeight() * 2);
-					Missile missile = new Missile();
+					// Create a missile as a Box2D/Scene2D object
+					Missile missile = new Missile(world);
+					stage.addActor(missile);
 				}
 				
 			}

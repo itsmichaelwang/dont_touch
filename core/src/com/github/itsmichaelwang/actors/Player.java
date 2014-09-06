@@ -23,8 +23,8 @@ public class Player extends Image {
 	private static float SIDE = 0.5f;
 	private Body body;
 	
-	public Player(Stage stage, GameWorld world) {
-		this.stage = stage;
+	public Player(GameWorld world) {
+		this.stage = world.stage;
 		
 		// load graphics
 		playerTexture = new Texture(Gdx.files.internal("data/PlayerBox.png"));
