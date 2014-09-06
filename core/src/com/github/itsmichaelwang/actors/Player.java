@@ -20,7 +20,7 @@ import com.github.itsmichaelwang.donttouch.GameWorld;
 public class Player extends Image {
 	private Stage stage;
 	private Texture playerTexture;
-	private static float SIDE = 0.5f;
+	private static float SIDE = 0.25f;
 	private Body body;
 	
 	public Player(GameWorld world) {

@@ -55,7 +55,7 @@ public class SplashScreen implements Screen, InputProcessor {
 		batch = new SpriteBatch();
 		stage = new Stage(new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT), batch);
 		
-		world = new GameWorld(this);
+		world = new GameWorld(this, batch);
 		renderer = new GameRenderer(world);
 		
 		// Add GUI elements

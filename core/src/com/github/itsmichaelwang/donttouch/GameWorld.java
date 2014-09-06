@@ -1,6 +1,6 @@
 package com.github.itsmichaelwang.donttouch;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,10 +19,10 @@ public class GameWorld {
 	public Player player;
 	public MissileGenerator mg;
 	
-	public GameWorld(SplashScreen sScreen) {
+	public GameWorld(SplashScreen sScreen, SpriteBatch batch) {
 		this.sScreen = sScreen;
 		box2dWorld = new World(new Vector2(0, 0), true);
-		stage = new Stage(new ExtendViewport(UNIT_WIDTH, UNIT_HEIGHT)); // set game viewport to meters
+		stage = new Stage(new ExtendViewport(UNIT_WIDTH, UNIT_HEIGHT), batch); // set game viewport to meters
 		
 		generateWorld();
 	}
